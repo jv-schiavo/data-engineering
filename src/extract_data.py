@@ -8,12 +8,13 @@ format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 
-def extract_data(url:str) -> list[dict]:
-    response = requests.get(url)
+def extract_data(url:str, params:dict) -> list[dict]:
+    
+    response = requests.get(url,params)
     data = response.json()
 
     if response.status_code != 200:
-        logging.error("Error on the request")
+        logging.error("\n Error on the request")
         return []
     
     if not data:
