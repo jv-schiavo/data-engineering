@@ -9,19 +9,28 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-env_path = Path(__name__).resolve().parent.parent / 'config' / 'env'
+env_path = Path(__file__).resolve().parent.parent / 'config' / '.env'
 load_dotenv(env_path)
 
 user = os.getenv('user')
 password = os.getenv('password')
 database = os.getenv('database')
-##host = 'host.docker.internal'
+#host = 'host.docker.internal'
 host = 'localhost'
 
 def get_engine():
-    return create_engine(
-        f'postgresql+psycopg2://{user}:{quote_plus(str(password))}@{host}:5432/{database}'
-    )
+    port = os.getenv("port","5433")
+
+    print("user =", user)
+    print("password =", password)
+    print("host =", host)
+    print("database =", database)
+    print("port =", port)
+
+    engine = create_engine(
+        f"postgresql+psycopg2://{user}:{quote_plus(str(password))}@{host}:{port}/{database}")
+    
+    return engine
 
 engine = get_engine()
 
@@ -30,7 +39,7 @@ def load_weather_data(table_name:str, df):
         name=table_name,
         con=engine,
         if_exists='append',
-        inder=False
+        index=False
     )
 
     logging.info('Data has been succesfully loaded')

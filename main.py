@@ -10,10 +10,11 @@ import logging
 logging.basicConfig(level=logging.INFO, 
 format='%(asctime)s - %(levelname)s - %(message)s')
 
-env_path = Path(__file__).resolve().parent.parent / 'config' / 'env'
+env_path = Path(__file__).resolve().parent / 'config' / '.env'
 load_dotenv(env_path)
 
-API_KEY = os.getenv('api_key')
+API_KEY = os.getenv('API_KEY')
+print(API_KEY)
 
 url = "https://api.openweathermap.org/data/2.5/weather"
 
@@ -30,10 +31,10 @@ def pipeline():
         extract_data(url, params)
 
         logging.info('Second Step: Tranform')
-        data_transformations()
+        df = data_transformations()
 
         logging.info('Third Step: Load')
-        load_weather_data(table_name, df)
+        load_weather_data(table_name,df)
 
         print('\n'+'='*60)
         print('\n Pipeline succesfully completed')
