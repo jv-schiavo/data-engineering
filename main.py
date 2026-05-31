@@ -14,7 +14,6 @@ env_path = Path(__file__).resolve().parent / 'config' / '.env'
 load_dotenv(env_path)
 
 API_KEY = os.getenv('API_KEY')
-print(API_KEY)
 
 url = "https://api.openweathermap.org/data/2.5/weather"
 

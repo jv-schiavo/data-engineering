@@ -21,12 +21,6 @@ host = 'localhost'
 def get_engine():
     port = os.getenv("port","5433")
 
-    print("user =", user)
-    print("password =", password)
-    print("host =", host)
-    print("database =", database)
-    print("port =", port)
-
     engine = create_engine(
         f"postgresql+psycopg2://{user}:{quote_plus(str(password))}@{host}:{port}/{database}")
     
